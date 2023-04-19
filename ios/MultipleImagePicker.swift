@@ -1,12 +1,12 @@
 import UIKit
 import TLPhotoPicker
 import Photos
-import CropViewController
+import TOCropViewController
 
 var MultipleImagePickerConfigure = TLPhotosPickerConfigure();
 
 @objc(MultipleImagePicker)
-class MultipleImagePicker: NSObject, TLPhotosPickerViewControllerDelegate,UINavigationControllerDelegate, TLPhotosPickerLogDelegate, CropViewControllerDelegate {
+class MultipleImagePicker: NSObject, TLPhotosPickerViewControllerDelegate,UINavigationControllerDelegate, TLPhotosPickerLogDelegate, TOCropViewControllerDelegate {
     
     @objc static func requiresMainQueueSetup() -> Bool {
         return false
@@ -206,7 +206,7 @@ class MultipleImagePicker: NSObject, TLPhotosPickerViewControllerDelegate,UINavi
         }
     }
     
-    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+    func cropViewController(_ cropViewController: TOCropViewController, didCropToImage image: UIImage, angle: Int) {
         
         let filePath = getImagePathFromUIImage(uiImage: image, prefix: "crop")
         let TLAsset = self.selectedAssets.first;
@@ -234,7 +234,7 @@ class MultipleImagePicker: NSObject, TLPhotosPickerViewControllerDelegate,UINavi
     }
     
     func presentCropViewController(image: UIImage) {
-        let cropViewController = CropViewController(croppingStyle: (self.options["isCropCircle"] as! Bool) ? .circular : .default, image: image)
+        let cropViewController = TOCropViewController(croppingStyle: (self.options["isCropCircle"] as! Bool) ? .circular : .default, image: image)
         cropViewController.delegate = self
         cropViewController.doneButtonTitle = MultipleImagePickerConfigure.doneTitle
         cropViewController.doneButtonColor = MultipleImagePickerConfigure.selectedColor
